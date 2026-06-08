@@ -519,19 +519,19 @@ If an explicit delay model is required, two equivalent approaches are commonly u
 
 1. **State augmentation.** A delay chain of length
 
-\[
+```math
 d = \left\lceil\frac{T_d}{T_s}\right\rceil
-\]
+```
 
-is added, where \( T_d \) is the desired delay and \( T_s \) is the sampling time. The delayed signal is taken from the last element of the shift register.
+is added, where $\( T_d \)$ is the desired delay and $\( T_s \)$ is the sampling time. The delayed signal is taken from the last element of the shift register.
 
 2. **Discrete-time delay operator.** The upper-tank outflow in the lower-tank dynamics is replaced by
 
-\[
+```math
 Q_{\mathrm{out},1}[k-d]
 =
 z^{-d}Q_{\mathrm{out},1}[k].
-\]
+```
 
 In the current package, the delay is treated as a simulation feature and is not included in the local TS matrices by default.
 
@@ -653,15 +653,15 @@ This routine requires YALMIP and an SDP solver.
 
 The package includes optional LMI-based routines to demonstrate how the generated TS model can be used in closed-loop studies. These routines are not part of the core TS model generation workflow.
 
-The controller computes a state-feedback gain matrix \( K \), typically used as
+The controller computes a state-feedback gain matrix $\( K \)$, typically used as
 
 ```math
 u[k]=Kx[k]+Nr[k],
 ```
 
-where ```math\( r[k] \)``` is the reference signal and $\( N \)$ may denote a prefilter or reference-scaling matrix.
+where $\( r[k] \)$ is the reference signal and $\( N \)$ may denote a prefilter or reference-scaling matrix.
 
-The observer computes an observer gain $`\( L \)`$, and the observer may take the form
+The observer computes an observer gain $\( L \)$, and the observer may take the form
 
 ```math
 \hat{x}[k+1]
