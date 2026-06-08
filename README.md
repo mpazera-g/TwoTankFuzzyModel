@@ -298,20 +298,20 @@ The default physical parameters used by the package are defined in `getTanks.m`.
 
 | Symbol | Description | Default value | Unit |
 |---|---:|---:|---|
-| $\(H_1\)$ | upper tank height | 2 | m |
-| $\(H_2\)$ | lower tank height | 2 | m |
-| $\(D_1\)$ | upper tank diameter | 0.2 | m |
-| $\(D_2\)$ | lower tank diameter | 0.2 | m |
-| $\(R_1\)$ | upper tank radius | 0.1 | m |
-| $\(R_2\)$ | lower tank radius | 0.1 | m |
-| $\(g\)$ | gravitational acceleration | 9.81 | $m/s\(^2\)$ |
-| $\(A_{t,1}\)$ | upper tank cross-section area | 0.0314 | $m\(^2\)$ |
-| $\(A_{t,2}\)$ | lower tank cross-section area | 0.0314 | $m\(^2\)$ |
-| $\(Q_{\max}\)$ | maximum pump flow rate | 0.001 | $m\(^3\)/s$ |
+| $\(H_1\)$ | upper tank height | 2 | $m$ |
+| $\(H_2\)$ | lower tank height | 2 | $m$ |
+| $\(D_1\)$ | upper tank diameter | 0.2 | $m$ |
+| $\(D_2\)$ | lower tank diameter | 0.2 | $m$ |
+| $\(R_1\)$ | upper tank radius | 0.1 | $m$ |
+| $\(R_2\)$ | lower tank radius | 0.1 | $m$ |
+| $\(g\)$ | gravitational acceleration | 9.81 | $m/s^2$ |
+| $\(A_{t,1}\)$ | upper tank cross-section area | 0.0314 | $m^2$ |
+| $\(A_{t,2}\)$ | lower tank cross-section area | 0.0314 | $m^2$ |
+| $\(Q_{\max}\)$ | maximum pump flow rate | 0.001 | $m^3/s$ |
 | $\(d_{\mathrm{out},1}\)$ | upper tank drain opening diameter | 0.02 | $m$ |
-| $\(d_{\mathrm{out},2}\)$ | lower tank drain opening diameter | 0.023 | m |
-| $\(A_{\mathrm{out},1}\)$ | upper tank drain opening area | $\(3.1416 \cdot 10^{-4}\)$ | m\(^2\) |
-| $\(A_{\mathrm{out},2}\)$ | lower tank drain opening area | $\(4.1548 \cdot 10^{-4}\)$ | $m\(^2\)$ |
+| $\(d_{\mathrm{out},2}\)$ | lower tank drain opening diameter | 0.023 | $m$ |
+| $\(A_{\mathrm{out},1}\)$ | upper tank drain opening area | $\(3.1416 \cdot 10^{-4}\)$ | $m^2$ |
+| $\(A_{\mathrm{out},2}\)$ | lower tank drain opening area | $\(4.1548 \cdot 10^{-4}\)$ | $m^2$ |
 | $\(C_{\mathrm{out},1}\)$ | upper tank discharge coefficient | 0.72 | -- |
 | $\(C_{\mathrm{out},2}\)$ | lower tank discharge coefficient | 1 | -- |
 
