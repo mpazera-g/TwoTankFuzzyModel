@@ -528,9 +528,7 @@ is added, where $\( T_d \)$ is the desired delay and $\( T_s \)$ is the sampling
 2. **Discrete-time delay operator.** The upper-tank outflow in the lower-tank dynamics is replaced by
 
 ```math
-Q_{\mathrm{out},1}[k-d]
-=
-z^{-d}Q_{\mathrm{out},1}_k.
+Q_{\mathrm{out},1}[k-d] = z^{-d}Q_{\mathrm{out},1}_k.
 ```
 
 In the current package, the delay is treated as a simulation feature and is not included in the local TS matrices by default.
