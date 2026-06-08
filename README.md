@@ -504,7 +504,7 @@ A^d_{i,j} & B^d_{i,j}\\
 The resulting discrete-time local model is
 
 \[
-x[k+1]=A^d_{i,j}x[k]+B^d_{i,j}u[k].
+x[k+1]=A^d_{i,j}x_k+B^d_{i,j}u_k.
 \]
 
 This method is exact for piecewise-constant inputs over the sampling interval and is preferable to a simple Euler approximation when reproducibility and numerical consistency are important.
@@ -530,7 +530,7 @@ is added, where $\( T_d \)$ is the desired delay and $\( T_s \)$ is the sampling
 ```math
 Q_{\mathrm{out},1}[k-d]
 =
-z^{-d}Q_{\mathrm{out},1}[k].
+z^{-d}Q_{\mathrm{out},1}_k.
 ```
 
 In the current package, the delay is treated as a simulation feature and is not included in the local TS matrices by default.
@@ -656,23 +656,23 @@ The package includes optional LMI-based routines to demonstrate how the generate
 The controller computes a state-feedback gain matrix $\( K \)$, typically used as
 
 ```math
-u[k]=Kx[k]+Nr[k],
+u_k=Kx_k+Nr_k,
 ```
 
-where $\( r[k] \)$ is the reference signal and $\( N \)$ may denote a prefilter or reference-scaling matrix.
+where $\( r_k \)$ is the reference signal and $\( N \)$ may denote a prefilter or reference-scaling matrix.
 
 The observer computes an observer gain $\( L \)$, and the observer may take the form
 
 ```math
 \hat{x}[k+1]
 =
-A_k\hat{x}[k]
+A_k\hat{x}_k
 +
-B_k u[k]
+B_k u_k
 +
-L(y[k]-\hat{y}[k]),
+L(y_k-\hat{y}_k),
 \qquad
-\hat{y}[k]=C\hat{x}[k].
+\hat{y}_k=C\hat{x}_k.
 ```
 
 The exact LMI formulation can be modified by users depending on their target control or estimation problem.
