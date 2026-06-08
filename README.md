@@ -367,7 +367,7 @@ A_{i,j} =
 ```math
 B =
 \begin{bmatrix}
-\dfrac{Q_{\max,1}}{A_{t,1}} & 0\]
+\dfrac{Q_{\max,1}}{A_{t,1}} & 0
 0 & \dfrac{Q_{\max,2}}{A_{t,2}}
 \end{bmatrix}.
 ```
