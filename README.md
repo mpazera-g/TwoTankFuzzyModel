@@ -190,7 +190,7 @@ but with a reduced or experimentally calibrated $\( C_{\mathrm{out}} \)$.
 
 ## 7. Inflow modeling
 
-The package assumes that each tank is filled by a pump driven by a normalized PWM duty cycle \( u_j \in [0,1] \). The inflow is modeled as
+The package assumes that each tank is filled by a pump driven by a normalized PWM duty cycle $\( u_j \in [0,1] \)$. The inflow is modeled as
 
 ```math
 Q_{\mathrm{in},j}=Q_{\max,j}u_j, \qquad j\in\{1,2\},
@@ -298,22 +298,22 @@ The default physical parameters used by the package are defined in `getTanks.m`.
 
 | Symbol | Description | Default value | Unit |
 |---|---:|---:|---|
-| \(H_1\) | upper tank height | 2 | m |
-| \(H_2\) | lower tank height | 2 | m |
-| \(D_1\) | upper tank diameter | 0.2 | m |
-| \(D_2\) | lower tank diameter | 0.2 | m |
-| \(R_1\) | upper tank radius | 0.1 | m |
-| \(R_2\) | lower tank radius | 0.1 | m |
-| \(g\) | gravitational acceleration | 9.81 | m/s\(^2\) |
-| \(A_{t,1}\) | upper tank cross-section area | 0.0314 | m\(^2\) |
-| \(A_{t,2}\) | lower tank cross-section area | 0.0314 | m\(^2\) |
-| \(Q_{\max}\) | maximum pump flow rate | 0.001 | m\(^3\)/s |
-| \(d_{\mathrm{out},1}\) | upper tank drain opening diameter | 0.02 | m |
-| \(d_{\mathrm{out},2}\) | lower tank drain opening diameter | 0.023 | m |
-| \(A_{\mathrm{out},1}\) | upper tank drain opening area | \(3.1416 \cdot 10^{-4}\) | m\(^2\) |
-| \(A_{\mathrm{out},2}\) | lower tank drain opening area | \(4.1548 \cdot 10^{-4}\) | m\(^2\) |
-| \(C_{\mathrm{out},1}\) | upper tank discharge coefficient | 0.72 | -- |
-| \(C_{\mathrm{out},2}\) | lower tank discharge coefficient | 1 | -- |
+| $\(H_1\)$ | upper tank height | 2 | m |
+| $\(H_2\)$ | lower tank height | 2 | m |
+| $\(D_1\)$ | upper tank diameter | 0.2 | m |
+| $\(D_2\)$ | lower tank diameter | 0.2 | m |
+| $\(R_1\)$ | upper tank radius | 0.1 | m |
+| $\(R_2\)$ | lower tank radius | 0.1 | m |
+| $\(g\)$ | gravitational acceleration | 9.81 | $m/s\(^2\)$ |
+| $\(A_{t,1}\)$ | upper tank cross-section area | 0.0314 | $m\(^2\)$ |
+| $\(A_{t,2}\)$ | lower tank cross-section area | 0.0314 | $m\(^2\)$ |
+| $\(Q_{\max}\)$ | maximum pump flow rate | 0.001 | $m\(^3\)/s$ |
+| $\(d_{\mathrm{out},1}\)$ | upper tank drain opening diameter | 0.02 | $m$ |
+| $\(d_{\mathrm{out},2}\)$ | lower tank drain opening diameter | 0.023 | m |
+| $\(A_{\mathrm{out},1}\)$ | upper tank drain opening area | $\(3.1416 \cdot 10^{-4}\)$ | m\(^2\) |
+| $\(A_{\mathrm{out},2}\)$ | lower tank drain opening area | $\(4.1548 \cdot 10^{-4}\)$ | $m\(^2\)$ |
+| $\(C_{\mathrm{out},1}\)$ | upper tank discharge coefficient | 0.72 | -- |
+| $\(C_{\mathrm{out},2}\)$ | lower tank discharge coefficient | 1 | -- |
 
 These parameters can be modified to match a specific laboratory setup.
 
@@ -358,7 +358,7 @@ For the default two-tank model, the local matrices are
 ```math
 A_{i,j} =
 \begin{bmatrix}
--\dfrac{k_1}{2A_{t,1}\sqrt{h_{1,i}}} & 0\```math8pt]
+-\dfrac{k_1}{2A_{t,1}\sqrt{h_{1,i}}} & 0\
 \dfrac{k_1}{2A_{t,2}\sqrt{h_{1,i}}} &
 -\dfrac{k_2}{2A_{t,2}\sqrt{h_{2,j}}}
 \end{bmatrix},
@@ -367,7 +367,7 @@ A_{i,j} =
 ```math
 B =
 \begin{bmatrix}
-\dfrac{Q_{\max,1}}{A_{t,1}} & 0\```math8pt]
+\dfrac{Q_{\max,1}}{A_{t,1}} & 0\]
 0 & \dfrac{Q_{\max,2}}{A_{t,2}}
 \end{bmatrix}.
 ```
