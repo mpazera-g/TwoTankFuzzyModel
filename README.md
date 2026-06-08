@@ -30,8 +30,8 @@ TwoTankFuzzyModel/
 ├── designObserver.m
 ├── README.md
 ├── LICENSE.txt
-└── docs/
-    └── DOCUMENTATION_TwoTankFuzzyModel.md
+└── examples/
+    └── example_basic_TS_generation.m
 ```
 
 The main files are:
