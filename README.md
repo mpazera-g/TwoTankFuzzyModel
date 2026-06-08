@@ -664,7 +664,7 @@ where \( r[k] \) is the reference signal and \( N \) may denote a prefilter or r
 The observer computes an observer gain \( L \), and the observer may take the form
 
 ```Latex
-\hat{x}[k+1]
+$\hat{x}[k+1]
 =
 A_k\hat{x}[k]
 +
@@ -672,7 +672,7 @@ B_k u[k]
 +
 L(y[k]-\hat{y}[k]),
 \qquad
-\hat{y}[k]=C\hat{x}[k].
+\hat{y}[k]=C\hat{x}[k].$
 ```
 
 The exact LMI formulation can be modified by users depending on their target control or estimation problem.
