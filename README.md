@@ -94,7 +94,7 @@ The default model in the package assumes cylindrical tanks and turbulent gravity
 
 ## 5. General tank balance equation
 
-Let $` h(t) `$ denote the liquid level in the tank, $` V(h) `$ the volume of liquid, $ A_t(h) $ the cross-sectional area, $ Q_{\mathrm{in}}(t)$  the inflow rate, and $ Q_{\mathrm{out}}(t) $ the outflow rate. For an incompressible liquid of density $ \rho $, the mass balance is
+Let $` h(t) `$ denote the liquid level in the tank, $` V(h) `$ the volume of liquid, $` A_t(h) `$ the cross-sectional area, $` Q_{\mathrm{in}}(t)`$  the inflow rate, and $` Q_{\mathrm{out}}(t) `$ the outflow rate. For an incompressible liquid of density $` \rho `$, the mass balance is
 
 ```math
 \frac{dm(t)}{dt} = \rho Q_{\mathrm{in}}(t) - \rho Q_{\mathrm{out}}(t).
