@@ -1,0 +1,16 @@
+# MATLAB autosave and temporary files
+*.asv
+*.m~
+*.mat
+*.fig
+*.slxc
+*.mex*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
