@@ -128,17 +128,17 @@ v_{\mathrm{out}} = \sqrt{2gh},
 
 where $\( g \)$ is the gravitational acceleration. Under real conditions, losses are represented by a discharge coefficient $\( C_{\mathrm{out}} \)$, and the outlet area is denoted by $\( A_{\mathrm{out}} \)$. The resulting outflow is
 
-\[
+```math
 Q_{\mathrm{out}}(h)=C_{\mathrm{out}}A_{\mathrm{out}}\sqrt{2gh}.
-\]
+```
 
 This relation is nonlinear because it contains \( \sqrt{h} \). It is the default outflow model used in the package.
 
 The same relation can be derived from Bernoulli's equation. The pressure difference between the inside of the tank at the outlet level and the surroundings is approximately
 
-\[
+```math
 \Delta p = \rho g h,
-\]
+```
 
 and the discharge velocity is proportional to \( \sqrt{2\Delta p/\rho} \), which leads to the same square-root dependence on the liquid level.
 
@@ -146,27 +146,27 @@ and the discharge velocity is proportional to \( \sqrt{2\Delta p/\rho} \), which
 
 For slow laminar flow through a long narrow pipe, Hagen--Poiseuille's law may be more appropriate. If the pipe has internal radius \( R_{\mathrm{pipe}} \), length \( L \), and the dynamic viscosity of the liquid is \( \mu \), then
 
-\[
+```math
 Q = \frac{\pi R_{\mathrm{pipe}}^4}{8\mu L}\Delta p.
-\]
+```
 
 Introducing hydraulic resistance
 
-\[
+```math
 R_h = \frac{8\mu L}{\pi R_{\mathrm{pipe}}^4},
-\]
+```
 
 the flow can be written as
 
-\[
+```math
 Q = \frac{\Delta p}{R_h}.
-\]
+```
 
 For outflow from the bottom of the tank, \( \Delta p=\rho gh \), and therefore
 
-\[
+```math
 Q_{\mathrm{out}}(h)=\frac{\rho g}{R_h}h.
-\]
+```
 
 This relation is linear with respect to \( h \). It may correspond to flow through a very narrow capillary, a porous bottom, or another configuration where laminar assumptions remain valid.
 
@@ -174,15 +174,15 @@ This relation is linear with respect to \( h \). It may correspond to flow throu
 
 In practice, pipes, valves, and nozzles introduce local and distributed losses. In turbulent flow, pressure losses are commonly expressed as
 
-\[
+```math
 \Delta p = \zeta \frac{\rho v^2}{2},
-\]
+```
 
 where \( \zeta \) is a loss coefficient. If multiple loss sources are present, their effects can be combined into an effective loss coefficient, which modifies the effective discharge coefficient \( C_{\mathrm{out}} \). As a result, the outflow may still be represented by
 
-\[
+```math
 Q_{\mathrm{out}}(h)=C_{\mathrm{out}}A_{\mathrm{out}}\sqrt{2gh},
-\]
+```
 
 but with a reduced or experimentally calibrated \( C_{\mathrm{out}} \).
 
@@ -192,17 +192,17 @@ but with a reduced or experimentally calibrated \( C_{\mathrm{out}} \).
 
 The package assumes that each tank is filled by a pump driven by a normalized PWM duty cycle \( u_j \in [0,1] \). The inflow is modeled as
 
-\[
+```math
 Q_{\mathrm{in},j}=Q_{\max,j}u_j, \qquad j\in\{1,2\},
-\]
+```
 
 where \( Q_{\max,j} \) is the maximum pump flow rate.
 
 In a more general hydraulic system, inflow may also depend on the liquid level. For example, if a tank is supplied from a reservoir with constant level \( H_r \), then a gravity-driven inflow through an opening may take the form
 
-\[
+```math
 Q_{\mathrm{in}}(h)=C_{\mathrm{in}}A_{\mathrm{in}}\sqrt{2g(H_r-h)}.
-\]
+```
 
 Such a model is not used as the default inflow in the package, but the software can be modified to incorporate this assumption if needed.
 
@@ -214,7 +214,7 @@ The default benchmark consists of two cylindrical tanks placed one above the oth
 
 The upper tank dynamics are
 
-\[
+```math
 \frac{dh_1}{dt}
 =
 \frac{1}{A_{t,1}}
@@ -223,11 +223,11 @@ Q_{\mathrm{in},1}
 -
 C_{\mathrm{out},1}A_{\mathrm{out},1}\sqrt{2gh_1}
 \right).
-\]
+```
 
 The lower tank receives its own pump inflow and the outflow from the upper tank. Therefore,
 
-\[
+```math
 \frac{dh_2}{dt}
 =
 \frac{1}{A_{t,2}}
@@ -238,19 +238,19 @@ Q_{\mathrm{in},2}
 -
 C_{\mathrm{out},2}A_{\mathrm{out},2}\sqrt{2gh_2}
 \right).
-\]
+```
 
 By defining
 
-\[
+```math
 k_1=C_{\mathrm{out},1}A_{\mathrm{out},1}\sqrt{2g},
 \qquad
 k_2=C_{\mathrm{out},2}A_{\mathrm{out},2}\sqrt{2g},
-\]
+```
 
 and using \( Q_{\mathrm{in},j}=Q_{\max,j}u_j \), the model can be written as
 
-\[
+```math
 \frac{dh_1}{dt}
 =
 \frac{1}{A_{t,1}}
@@ -259,9 +259,9 @@ Q_{\max,1}u_1
 -
 k_1\sqrt{h_1}
 \right),
-\]
+```
 
-\[
+```math
 \frac{dh_2}{dt}
 =
 \frac{1}{A_{t,2}}
@@ -272,11 +272,11 @@ Q_{\max,2}u_2
 -
 k_2\sqrt{h_2}
 \right).
-\]
+```
 
 The state and input vectors are
 
-\[
+```math
 x =
 \begin{bmatrix}
 h_1\\
@@ -288,7 +288,7 @@ u =
 u_1\\
 u_2
 \end{bmatrix}.
-\]
+```
 
 ---
 
@@ -325,9 +325,9 @@ These parameters can be modified to match a specific laboratory setup.
 
 The nonlinear model can be compactly written as
 
-\[
+```math
 \dot{x}=f(x,u).
-\]
+```
 
 The TS approximation represents this nonlinear model as a convex combination of local linear models. Each local model is obtained by first-order Taylor expansion around a selected operating point.
 
@@ -335,13 +335,13 @@ The TS approximation represents this nonlinear model as a convex combination of 
 
 For each operating point
 
-\[
+```math
 (h_{1,i},h_{2,j}),
-\]
+```
 
 the local state-space matrices are obtained from the Jacobians
 
-\[
+```math
 A_{i,j} =
 \left.
 \frac{\partial f}{\partial x}
@@ -351,26 +351,26 @@ B_{i,j} =
 \left.
 \frac{\partial f}{\partial u}
 \right|_{(x_0,u_0)}.
-\]
+```
 
 For the default two-tank model, the local matrices are
 
-\[
+```math
 A_{i,j} =
 \begin{bmatrix}
--\dfrac{k_1}{2A_{t,1}\sqrt{h_{1,i}}} & 0\\[8pt]
+-\dfrac{k_1}{2A_{t,1}\sqrt{h_{1,i}}} & 0\```math8pt]
 \dfrac{k_1}{2A_{t,2}\sqrt{h_{1,i}}} &
 -\dfrac{k_2}{2A_{t,2}\sqrt{h_{2,j}}}
 \end{bmatrix},
-\]
+```
 
-\[
+```math
 B =
 \begin{bmatrix}
-\dfrac{Q_{\max,1}}{A_{t,1}} & 0\\[8pt]
+\dfrac{Q_{\max,1}}{A_{t,1}} & 0\```math8pt]
 0 & \dfrac{Q_{\max,2}}{A_{t,2}}
 \end{bmatrix}.
-\]
+```
 
 The matrix \( B \) is constant because the inflows enter the model linearly through \( Q_{\mathrm{in},j}=Q_{\max,j}u_j \).
 
@@ -378,7 +378,7 @@ The matrix \( B \) is constant because the inflows enter the model linearly thro
 
 The continuous-time TS model is
 
-\[
+```math
 \dot{x}(t)=
 \sum_{i=1}^{N}
 \sum_{j=1}^{N}
@@ -386,7 +386,7 @@ w_{i,j}(h_1(t),h_2(t))
 \left(
 A_{i,j}x(t)+B_{i,j}u(t)
 \right),
-\]
+```
 
 where \( w_{i,j} \) are normalized rule weights.
 
@@ -396,24 +396,24 @@ where \( w_{i,j} \) are normalized rule weights.
 
 The premise variables are the water levels:
 
-\[
+```math
 z =
 \begin{bmatrix}
 h_1\\
 h_2
 \end{bmatrix}.
-\]
+```
 
 Each premise variable is associated with a set of membership functions. If \( \mu_i(h_1) \) and \( \mu_j(h_2) \) denote membership degrees, then the raw activation of the rule \( (i,j) \) is
 
-\[
+```math
 \mu^{\mathrm{raw}}_{i,j} =
 \mu_i(h_1)\mu_j(h_2).
-\]
+```
 
 To ensure convexity, the raw activations are normalized as
 
-\[
+```math
 w_{i,j}(h_1,h_2)
 =
 \frac{\mu_i(h_1)\mu_j(h_2)}
@@ -422,17 +422,17 @@ w_{i,j}(h_1,h_2)
 \sum_{l=1}^{N}
 \mu_k(h_1)\mu_l(h_2)
 }.
-\]
+```
 
 The normalized weights satisfy
 
-\[
+```math
 w_{i,j}\geq 0,
 \qquad
 \sum_{i=1}^{N}
 \sum_{j=1}^{N}
 w_{i,j}=1.
-\]
+```
 
 The package provides two membership-function options:
 
@@ -445,9 +445,9 @@ Users can also implement and use custom membership functions.
 
 For five linguistic levels, the default centers may be
 
-\[
+```math
 h_{\mathrm{vals}} = [0.1,\,0.3,\,0.5,\,0.7,\,0.9].
-\]
+```
 
 The corresponding linguistic labels can be:
 
@@ -463,13 +463,13 @@ The corresponding linguistic labels can be:
 
 Gaussian membership functions are smooth and can be used when smoother transitions between local models are preferred. A typical Gaussian membership function is
 
-\[
+```math
 \mu_i(h)
 =
 \exp\left(
 -\frac{(h-c_i)^2}{2\sigma^2}
 \right),
-\]
+```
 
 where \( c_i \) is the center of the \( i \)-th fuzzy set and \( \sigma \) controls the width of the function.
 
@@ -479,13 +479,13 @@ where \( c_i \) is the center of the \( i \)-th fuzzy set and \( \sigma \) contr
 
 The local models are first obtained in continuous time:
 
-\[
+```math
 \dot{x}(t)=A^c_{i,j}x(t)+B^c_{i,j}u(t).
-\]
+```
 
 For a sampling time \( T_s \), the package discretizes each local model using Zero-Order Hold (ZOH). The discretization is performed via the Van Loan augmented matrix exponential:
 
-\[
+```math
 \exp
 \left(
 \begin{bmatrix}
@@ -499,13 +499,13 @@ T_s
 A^d_{i,j} & B^d_{i,j}\\
 0 & I
 \end{bmatrix}.
-\]
+```
 
 The resulting discrete-time local model is
 
-\[
+```math
 x_{k+1}=A^d_{i,j}x_k+B^d_{i,j}u_k.
-\]
+```
 
 This method is exact for piecewise-constant inputs over the sampling interval and is preferable to a simple Euler approximation when reproducibility and numerical consistency are important.
 
