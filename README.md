@@ -112,7 +112,7 @@ the general volume balance becomes
 A_t(h)\frac{dh(t)}{dt} = Q_{\mathrm{in}}(t) - Q_{\mathrm{out}}(t).
 ```
 
-For cylindrical tanks, \( A_t(h)=A_t=\mathrm{const.} \). For non-cylindrical tanks, e.g. conical tanks, \( A_t(h) \) depends on \( h \), which introduces additional nonlinearity.
+For cylindrical tanks, $\( A_t(h)=A_t=\mathrm{const.} \)$. For non-cylindrical tanks, e.g. conical tanks, $\( A_t(h) \)$ depends on $\( h \)$, which introduces additional nonlinearity.
 
 ---
 
@@ -122,11 +122,11 @@ For cylindrical tanks, \( A_t(h)=A_t=\mathrm{const.} \). For non-cylindrical tan
 
 For a discharge hole located near the bottom of the tank, Torricelli's law gives the ideal discharge velocity
 
-\[
+```math
 v_{\mathrm{out}} = \sqrt{2gh},
-\]
+```
 
-where \( g \) is the gravitational acceleration. Under real conditions, losses are represented by a discharge coefficient \( C_{\mathrm{out}} \), and the outlet area is denoted by \( A_{\mathrm{out}} \). The resulting outflow is
+where $\( g \)$ is the gravitational acceleration. Under real conditions, losses are represented by a discharge coefficient $\( C_{\mathrm{out}} \)$, and the outlet area is denoted by $\( A_{\mathrm{out}} \)$. The resulting outflow is
 
 \[
 Q_{\mathrm{out}}(h)=C_{\mathrm{out}}A_{\mathrm{out}}\sqrt{2gh}.
