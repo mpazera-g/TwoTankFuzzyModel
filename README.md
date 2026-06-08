@@ -210,7 +210,7 @@ Such a model is not used as the default inflow in the package, but the software 
 
 ## 8. Nonlinear two-tank model used in the package
 
-The default benchmark consists of two cylindrical tanks placed one above the other. The upper and lower tank levels are denoted by $` h_1(t) `$ and $` h_2(t)` $. The inflows are $` Q_{\mathrm{in},1}(t) `$ and $` Q_{\mathrm{in},2}(t) `$, while the outflows are $ `Q_{\mathrm{out},1}(t)` $ and $ `Q_{\mathrm{out},2}(t)` $.
+The default benchmark consists of two cylindrical tanks placed one above the other. The upper and lower tank levels are denoted by $` h_1(t) `$ and $` h_2(t)`$. The inflows are $`Q_{\mathrm{in},1}(t)`$ and $` Q_{\mathrm{in},2}(t) `$, while the outflows are $ `Q_{\mathrm{out},1}(t)` $ and $ `Q_{\mathrm{out},2}(t)` $.
 
 The upper tank dynamics are
 
