@@ -729,6 +729,7 @@ The current implementation focuses on a two-tank benchmark with gravity-driven t
 - automatic export of generated models for Simulink or Python.
 
 These features constitute possible directions for future development. Users may nevertheless modify the nonlinear model, physical parameters, and membership-function routines to adapt the package to other configurations.
+
 ---
 
 ## 20. License
