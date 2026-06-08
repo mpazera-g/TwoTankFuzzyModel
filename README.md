@@ -504,7 +504,7 @@ A^d_{i,j} & B^d_{i,j}\\
 The resulting discrete-time local model is
 
 \[
-x[k+1]=A^d_{i,j}x_k+B^d_{i,j}u_k.
+x_{k+1}=A^d_{i,j}x_k+B^d_{i,j}u_k.
 \]
 
 This method is exact for piecewise-constant inputs over the sampling interval and is preferable to a simple Euler approximation when reproducibility and numerical consistency are important.
@@ -664,7 +664,7 @@ where $\( r_k \)$ is the reference signal and $\( N \)$ may denote a prefilter o
 The observer computes an observer gain $\( L \)$, and the observer may take the form
 
 ```math
-\hat{x}[k+1]
+\hat{x}_{k+1}
 =
 A_k\hat{x}_k
 +
