@@ -132,7 +132,7 @@ where $\( g \)$ is the gravitational acceleration. Under real conditions, losses
 Q_{\mathrm{out}}(h)=C_{\mathrm{out}}A_{\mathrm{out}}\sqrt{2gh}.
 ```
 
-This relation is nonlinear because it contains \( \sqrt{h} \). It is the default outflow model used in the package.
+This relation is nonlinear because it contains $\( \sqrt{h} \)$. It is the default outflow model used in the package.
 
 The same relation can be derived from Bernoulli's equation. The pressure difference between the inside of the tank at the outlet level and the surroundings is approximately
 
@@ -140,11 +140,11 @@ The same relation can be derived from Bernoulli's equation. The pressure differe
 \Delta p = \rho g h,
 ```
 
-and the discharge velocity is proportional to \( \sqrt{2\Delta p/\rho} \), which leads to the same square-root dependence on the liquid level.
+and the discharge velocity is proportional to $\( \sqrt{2\Delta p/\rho} \)$, which leads to the same square-root dependence on the liquid level.
 
 ### 6.2 Laminar outflow through a narrow pipe
 
-For slow laminar flow through a long narrow pipe, Hagen--Poiseuille's law may be more appropriate. If the pipe has internal radius \( R_{\mathrm{pipe}} \), length \( L \), and the dynamic viscosity of the liquid is \( \mu \), then
+For slow laminar flow through a long narrow pipe, Hagen--Poiseuille's law may be more appropriate. If the pipe has internal radius $\( R_{\mathrm{pipe}} \)$, length $\( L \)$, and the dynamic viscosity of the liquid is $\( \mu \)$, then
 
 ```math
 Q = \frac{\pi R_{\mathrm{pipe}}^4}{8\mu L}\Delta p.
@@ -162,13 +162,13 @@ the flow can be written as
 Q = \frac{\Delta p}{R_h}.
 ```
 
-For outflow from the bottom of the tank, \( \Delta p=\rho gh \), and therefore
+For outflow from the bottom of the tank, $\( \Delta p=\rho gh \)$, and therefore
 
 ```math
 Q_{\mathrm{out}}(h)=\frac{\rho g}{R_h}h.
 ```
 
-This relation is linear with respect to \( h \). It may correspond to flow through a very narrow capillary, a porous bottom, or another configuration where laminar assumptions remain valid.
+This relation is linear with respect to $\( h \)$. It may correspond to flow through a very narrow capillary, a porous bottom, or another configuration where laminar assumptions remain valid.
 
 ### 6.3 Hydraulic losses and effective discharge coefficient
 
@@ -178,13 +178,13 @@ In practice, pipes, valves, and nozzles introduce local and distributed losses. 
 \Delta p = \zeta \frac{\rho v^2}{2},
 ```
 
-where \( \zeta \) is a loss coefficient. If multiple loss sources are present, their effects can be combined into an effective loss coefficient, which modifies the effective discharge coefficient \( C_{\mathrm{out}} \). As a result, the outflow may still be represented by
+where $\( \zeta \)$ is a loss coefficient. If multiple loss sources are present, their effects can be combined into an effective loss coefficient, which modifies the effective discharge coefficient $\( C_{\mathrm{out}} \)$. As a result, the outflow may still be represented by
 
 ```math
 Q_{\mathrm{out}}(h)=C_{\mathrm{out}}A_{\mathrm{out}}\sqrt{2gh},
 ```
 
-but with a reduced or experimentally calibrated \( C_{\mathrm{out}} \).
+but with a reduced or experimentally calibrated $\( C_{\mathrm{out}} \)$.
 
 ---
 
@@ -196,9 +196,9 @@ The package assumes that each tank is filled by a pump driven by a normalized PW
 Q_{\mathrm{in},j}=Q_{\max,j}u_j, \qquad j\in\{1,2\},
 ```
 
-where \( Q_{\max,j} \) is the maximum pump flow rate.
+where $\( Q_{\max,j} \)$ is the maximum pump flow rate.
 
-In a more general hydraulic system, inflow may also depend on the liquid level. For example, if a tank is supplied from a reservoir with constant level \( H_r \), then a gravity-driven inflow through an opening may take the form
+In a more general hydraulic system, inflow may also depend on the liquid level. For example, if a tank is supplied from a reservoir with constant level $\( H_r \)$, then a gravity-driven inflow through an opening may take the form
 
 ```math
 Q_{\mathrm{in}}(h)=C_{\mathrm{in}}A_{\mathrm{in}}\sqrt{2g(H_r-h)}.
@@ -210,7 +210,7 @@ Such a model is not used as the default inflow in the package, but the software 
 
 ## 8. Nonlinear two-tank model used in the package
 
-The default benchmark consists of two cylindrical tanks placed one above the other. The upper and lower tank levels are denoted by \( h_1(t) \) and \( h_2(t) \). The inflows are \( Q_{\mathrm{in},1}(t) \) and \( Q_{\mathrm{in},2}(t) \), while the outflows are \( Q_{\mathrm{out},1}(t) \) and \( Q_{\mathrm{out},2}(t) \).
+The default benchmark consists of two cylindrical tanks placed one above the other. The upper and lower tank levels are denoted by $\( h_1(t) \)$ and $\( h_2(t) \)$. The inflows are $\( Q_{\mathrm{in},1}(t) \)$ and $\( Q_{\mathrm{in},2}(t) \)$, while the outflows are $\( Q_{\mathrm{out},1}(t) \)$ and $\( Q_{\mathrm{out},2}(t) \)$.
 
 The upper tank dynamics are
 
@@ -248,7 +248,7 @@ k_1=C_{\mathrm{out},1}A_{\mathrm{out},1}\sqrt{2g},
 k_2=C_{\mathrm{out},2}A_{\mathrm{out},2}\sqrt{2g},
 ```
 
-and using \( Q_{\mathrm{in},j}=Q_{\max,j}u_j \), the model can be written as
+and using $\( Q_{\mathrm{in},j}=Q_{\max,j}u_j \)$, the model can be written as
 
 ```math
 \frac{dh_1}{dt}
@@ -372,7 +372,7 @@ B =
 \end{bmatrix}.
 ```
 
-The matrix \( B \) is constant because the inflows enter the model linearly through \( Q_{\mathrm{in},j}=Q_{\max,j}u_j \).
+The matrix $\( B \)$ in this case is constant because the inflows enter the model linearly through $\( Q_{\mathrm{in},j}=Q_{\max,j}u_j \)$.
 
 ### 10.3 Global TS representation
 
@@ -388,7 +388,7 @@ A_{i,j}x(t)+B_{i,j}u(t)
 \right),
 ```
 
-where \( w_{i,j} \) are normalized rule weights.
+where $\( w_{i,j} \)$ are normalized rule weights.
 
 ---
 
@@ -404,7 +404,7 @@ h_2
 \end{bmatrix}.
 ```
 
-Each premise variable is associated with a set of membership functions. If \( \mu_i(h_1) \) and \( \mu_j(h_2) \) denote membership degrees, then the raw activation of the rule \( (i,j) \) is
+Each premise variable is associated with a set of membership functions. If $\( \mu_i(h_1)$ \) and $\( \mu_j(h_2) \)$ denote membership degrees, then the raw activation of the rule $\( (i,j) \)$ is
 
 ```math
 \mu^{\mathrm{raw}}_{i,j} =
@@ -471,7 +471,7 @@ Gaussian membership functions are smooth and can be used when smoother transitio
 \right),
 ```
 
-where \( c_i \) is the center of the \( i \)-th fuzzy set and \( \sigma \) controls the width of the function.
+where $\( c_i \)$ is the center of the $\( i \)$-th fuzzy set and $\( \sigma \)$ controls the width of the function.
 
 ---
 
@@ -483,7 +483,7 @@ The local models are first obtained in continuous time:
 \dot{x}(t)=A^c_{i,j}x(t)+B^c_{i,j}u(t).
 ```
 
-For a sampling time \( T_s \), the package discretizes each local model using Zero-Order Hold (ZOH). The discretization is performed via the Van Loan augmented matrix exponential:
+For a sampling time $\( T_s \)$, the package discretizes each local model using Zero-Order Hold (ZOH). The discretization is performed via the Van Loan augmented matrix exponential:
 
 ```math
 \exp
@@ -513,7 +513,7 @@ This method is exact for piecewise-constant inputs over the sampling interval an
 
 ## 13. Optional transport delay
 
-The nominal local TS matrices do not include transport delay between the tanks. However, in simulation, the inter-tank flow \( Q_{\mathrm{out},1} \) can be passed through a finite FIFO buffer to emulate transport or actuation delay.
+The nominal local TS matrices do not include transport delay between the tanks. However, in simulation, the inter-tank flow $\( Q_{\mathrm{out},1} \)$ can be passed through a finite FIFO buffer to emulate transport or actuation delay.
 
 If an explicit delay model is required, two equivalent approaches are commonly used:
 
@@ -585,7 +585,7 @@ Inputs:
 
 - `params`: structure with physical and hydraulic parameters,
 - `Ts`: sampling time,
-- `h_vals`: grid of operating points for \( h_1 \) and \( h_2 \).
+- `h_vals`: grid of operating points for $\( h_1 \)$ and $\( h_2 \)$.
 
 Outputs:
 
@@ -681,12 +681,12 @@ The exact LMI formulation can be modified by users depending on their target con
 
 ## 17. Illustrative simulation example
 
-The example distributed with the package generates a TS model using five fuzzy sets for each water level. Since there are two premise variables, this results in \(5 \times 5 = 25\) local models.
+The example distributed with the package generates a TS model using five fuzzy sets for each water level. Since there are two premise variables, this results in $\(5 \times 5 = 25\)$ local models.
 
 A typical simulation scenario uses:
 
-- sampling time \(T_s=0.1\) s,
-- total simulation time \(T_{\mathrm{end}}=600\) s,
+- sampling time $\(T_s=0.1\)$ s,
+- total simulation time $\(T_{\mathrm{end}}=600\)$ s,
 - triangular or Gaussian membership functions,
 - a time-varying reference for the upper tank,
 - a constant reference for the lower tank,
@@ -707,10 +707,10 @@ The simulation produces:
 To improve reproducibility:
 
 1. Use a fixed MATLAB version whenever possible.
-2. Report the sampling time \(T_s\).
-3. Report the operating-point grid \(h_{\mathrm{vals}}\).
+2. Report the sampling time $\(T_s\)$.
+3. Report the operating-point grid $\(h_{\mathrm{vals}}\)$.
 4. Specify whether triangular or Gaussian membership functions are used.
-5. If Gaussian functions are used, report the value of \( \sigma \).
+5. If Gaussian functions are used, report the value of $\( \sigma \)$.
 6. Report all physical parameters modified in `getTanks.m`.
 7. If optional LMI routines are used, report the YALMIP version and the SDP solver.
 
