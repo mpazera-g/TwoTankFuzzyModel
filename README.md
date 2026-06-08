@@ -659,9 +659,9 @@ The controller computes a state-feedback gain matrix \( K \), typically used as
 u[k]=Kx[k]+Nr[k],
 ```
 
-where ```math\( r[k] \)``` is the reference signal and ```math\( N \)``` may denote a prefilter or reference-scaling matrix.
+where ```math\( r[k] \)``` is the reference signal and $\( N \)$ may denote a prefilter or reference-scaling matrix.
 
-The observer computes an observer gain $`math\( L \)`$, and the observer may take the form
+The observer computes an observer gain $`\( L \)`$, and the observer may take the form
 
 ```math
 \hat{x}[k+1]
