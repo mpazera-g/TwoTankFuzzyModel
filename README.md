@@ -663,7 +663,7 @@ where \( r[k] \) is the reference signal and \( N \) may denote a prefilter or r
 
 The observer computes an observer gain \( L \), and the observer may take the form
 
-```Latex
+```math
 $\hat{x}[k+1]
 =
 A_k\hat{x}[k]
