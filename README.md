@@ -307,7 +307,7 @@ The default physical parameters used by the package are defined in `getTanks.m`.
 | $g$ | gravitational acceleration | 9.81 | $m/s^2$ |
 | $A_{t,1}$ | upper tank cross-section area | 0.0314 | $m^2$ |
 | $A_{t,2}$ | lower tank cross-section area | 0.0314 | $m^2$ |
-| $Q_{\max}$ | maximum pump flow rate | 0.001 | $m^3/s$ |
+| $Q_{\max}$ | maximum pump flow rate | 0.001 | $`m^3/s`$ |
 | $d_{\mathrm{out},1}$ | upper tank drain opening diameter | 0.02 | $m$ |
 | $d_{\mathrm{out},2}$ | lower tank drain opening diameter | 0.023 | $m$ |
 | $A_{\mathrm{out},1}$ | upper tank drain opening area | $3.1416 \cdot 10^{-4}$ | $m^2$ |
