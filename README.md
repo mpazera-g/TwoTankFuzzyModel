@@ -372,7 +372,7 @@ B =
 \end{bmatrix}.
 ```
 
-The matrix $ B $ in this case is constant because the inflows enter the model linearly through $ Q_{\mathrm{in},j}=Q_{\max,j}u_j $.
+The matrix $` B `$ in this case is constant because the inflows enter the model linearly through $` Q_{\mathrm{in},j}=Q_{\max,j}u_j `$.
 
 ### 10.3 Global TS representation
 
@@ -388,7 +388,7 @@ A_{i,j}x(t)+B_{i,j}u(t)
 \right),
 ```
 
-where $ w_{i,j} $ are normalized rule weights.
+where $` w_{i,j} `$ are normalized rule weights.
 
 ---
 
@@ -404,7 +404,7 @@ h_2
 \end{bmatrix}.
 ```
 
-Each premise variable is associated with a set of membership functions. If $ \mu_i(h_1)$  and $ \mu_j(h_2) $ denote membership degrees, then the raw activation of the rule $ (i,j) $ is
+Each premise variable is associated with a set of membership functions. If $` \mu_i(h_1)`$  and $` \mu_j(h_2)` $ denote membership degrees, then the raw activation of the rule $ `(i,j)` $ is
 
 ```math
 \mu^{\mathrm{raw}}_{i,j} =
@@ -471,7 +471,7 @@ Gaussian membership functions are smooth and can be used when smoother transitio
 \right),
 ```
 
-where $ c_i $ is the center of the $ i $-th fuzzy set and $ \sigma $ controls the width of the function.
+where $` c_i `$ is the center of the $` i `$-th fuzzy set and $ `\sigma `$ controls the width of the function.
 
 ---
 
@@ -483,7 +483,7 @@ The local models are first obtained in continuous time:
 \dot{x}(t)=A^c_{i,j}x(t)+B^c_{i,j}u(t).
 ```
 
-For a sampling time $ T_s $, the package discretizes each local model using Zero-Order Hold (ZOH). The discretization is performed via the Van Loan augmented matrix exponential:
+For a sampling time $` T_s` $, the package discretizes each local model using Zero-Order Hold (ZOH). The discretization is performed via the Van Loan augmented matrix exponential:
 
 ```math
 \exp
@@ -513,7 +513,7 @@ This method is exact for piecewise-constant inputs over the sampling interval an
 
 ## 13. Optional transport delay
 
-The nominal local TS matrices do not include transport delay between the tanks. However, in simulation, the inter-tank flow $ Q_{\mathrm{out},1} $ can be passed through a finite FIFO buffer to emulate transport or actuation delay.
+The nominal local TS matrices do not include transport delay between the tanks. However, in simulation, the inter-tank flow $ `Q_{\mathrm{out},1} `$ can be passed through a finite FIFO buffer to emulate transport or actuation delay.
 
 If an explicit delay model is required, two equivalent approaches are commonly used:
 
@@ -523,7 +523,7 @@ If an explicit delay model is required, two equivalent approaches are commonly u
 d = \left\lceil\frac{T_d}{T_s}\right\rceil
 ```
 
-is added, where $ T_d $ is the desired delay and $ T_s $ is the sampling time. The delayed signal is taken from the last element of the shift register.
+is added, where $` T_d` $ is the desired delay and $` T_s `$ is the sampling time. The delayed signal is taken from the last element of the shift register.
 
 2. **Discrete-time delay operator.** The upper-tank outflow in the lower-tank dynamics is replaced by
 
@@ -583,7 +583,7 @@ Inputs:
 
 - `params`: structure with physical and hydraulic parameters,
 - `Ts`: sampling time,
-- `h_vals`: grid of operating points for $ h_1 $ and $ h_2 $.
+- `h_vals`: grid of operating points for $ `h_1 `$ and $` h_2 `$.
 
 Outputs:
 
@@ -651,15 +651,15 @@ This routine requires YALMIP and an SDP solver.
 
 The package includes optional LMI-based routines to demonstrate how the generated TS model can be used in closed-loop studies. These routines are not part of the core TS model generation workflow.
 
-The controller computes a state-feedback gain matrix $ K $, typically used as
+The controller computes a state-feedback gain matrix $ `K `$, typically used as
 
 ```math
 u_k=Kx_k+Nr_k,
 ```
 
-where $ r_k $ is the reference signal and $ N $ may denote a prefilter or reference-scaling matrix.
+where $` r_k` $ is the reference signal and $` N` $ may denote a prefilter or reference-scaling matrix.
 
-The observer computes an observer gain $ L $, and the observer may take the form
+The observer computes an observer gain $ `L` $, and the observer may take the form
 
 ```math
 \hat{x}_{k+1}
@@ -679,12 +679,12 @@ The exact LMI formulation can be modified by users depending on their target con
 
 ## 17. Illustrative simulation example
 
-The example distributed with the package generates a TS model using five fuzzy sets for each water level. Since there are two premise variables, this results in $5 \times 5 = 25$ local models.
+The example distributed with the package generates a TS model using five fuzzy sets for each water level. Since there are two premise variables, this results in $`5 \times 5 = 25`$ local models.
 
 A typical simulation scenario uses:
 
-- sampling time $T_s=0.1$ s,
-- total simulation time $T_{\mathrm{end}}=600$ s,
+- sampling time $`T_s=0.1`$ s,
+- total simulation time $`T_{\mathrm{end}}=600`$ s,
 - triangular or Gaussian membership functions,
 - a time-varying reference for the upper tank,
 - a constant reference for the lower tank,
@@ -705,10 +705,10 @@ The simulation produces:
 To improve reproducibility:
 
 1. Use a fixed MATLAB version whenever possible.
-2. Report the sampling time $T_s$.
-3. Report the operating-point grid $h_{\mathrm{vals}}$.
+2. Report the sampling time $`T_s`$.
+3. Report the operating-point grid $`h_{\mathrm{vals}}`$.
 4. Specify whether triangular or Gaussian membership functions are used.
-5. If Gaussian functions are used, report the value of $ \sigma $.
+5. If Gaussian functions are used, report the value of $` \sigma` $.
 6. Report all physical parameters modified in `getTanks.m`.
 7. If optional LMI routines are used, report the YALMIP version and the SDP solver.
 
