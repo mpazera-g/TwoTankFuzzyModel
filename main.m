@@ -30,7 +30,7 @@ noFuzzySets=5;
 h_vals=linspace(h_low,h_high,noFuzzySets);  % Caution: Please do not use 0 as the lower value to avoid dividing by 0
 
 %% TS model generation
-[Ad,Bd]=generate_TS_model(T,Ts,h_vals);
+[Ad,Bd,cd] = generate_TS_model(T,Ts,h_vals);
 
 %% state space output matrix
 C=eye(2);   % output matrix of the system like y(k)=C*x(k); 2 state variable are measurable
@@ -60,9 +60,11 @@ ref(1,:)=0.3*sin(omega*t)+0.5;  % sine-like reference for the upper tank
 %% container variables for output TS matrices
 A_sim=cell(1,nt-1);
 B_sim=cell(1,nt-1);
+c_sim=cell(1,nt-1);
 w=zeros(nts, nt);
 A_est=cell(1,nt-1);
 B_est=cell(1,nt-1);
+c_est=cell(1,nt-1);
 w_est=zeros(nts,nt);
 
 %%
@@ -71,8 +73,10 @@ delay_steps=round(T_d/Ts);              % no. of delay steps
 Q_out1_hist=zeros(1, delay_steps+1);    % delay buffer
 
 %% container for simulation vectors
-x=zeros(n,nt);            % state of the system
+x=zeros(n,nt);            % state of the nonlinear system
+xts=zeros(n,nt);          % state of the system approximated with TS
 x(:,1)=[0;0];             % initial condition
+xts(:,1)=[0;0];
 h1=zeros(1, nt);          % water level in the first tank
 h2=zeros(1, nt);          % water level in the first tank
 h1(1)=0;                  % initial conditions
@@ -99,8 +103,8 @@ while k < nt
     sqrt_h2=sqrt(max(h2_k, 0));
 
     sigma=0.25;
-    % [A_sim{k},B_sim{k},w(:,k)]=getTSmodel(h1_k,h2_k,Ac,Bc,h_vals,'gaussian',sigma); % get current A and B matrices based on TS model
-    [A_sim{k},B_sim{k},w(:,k)]=getTSmodel(h1_k,h2_k,Ad,Bd,h_vals); % get current A and B matrices based on TS model
+    % [A_sim{k},B_sim{k},w(:,k)]=getTSmodel(h1_k,h2_k,Ad,Bd,h_vals,'gaussian',sigma); % get current A and B matrices based on TS model
+    [A_sim{k},B_sim{k},c_sim{k},w(:,k)]=getTSmodel(h1_k,h2_k,Ad,Bd,cd,h_vals); % get current A and B matrices based on TS model
 
     M  = -Cc/(A_sim{k}-B_sim{k}*K-eye(n))*B_sim{k}; % auxilary variable for pre-filter Kr
     Kr = M \ eye(size(M,1)); % calculate a pre-filter matrix to the reference vector
@@ -121,8 +125,11 @@ while k < nt
     x(:,k+1)=[h1(k+1);h2(k+1)];
     y(:,k)=C*x(:,k);
 
-    [A_est{k},B_est{k},w_est(:,k)]=getTSmodel(xest(1,k),xest(2,k),Ad,Bd,h_vals); % get current A and B matrices based on TS model
-    xest(:,k+1)=A_est{k}*xest(:,k)+B_est{k}*u(:,k)+L*(y(:,k)-C*xest(:,k)); % state estimation
+    xts(:,k+1)=A_sim{k}*xts(:,k)+B_sim{k}*u(:,k)+c_sim{k};
+
+    % state estimation
+    [A_est{k},B_est{k},c_est{k},w_est(:,k)]=getTSmodel(xest(1,k),xest(2,k),Ad,Bd,cd,h_vals); % get current A and B matrices based on TS model
+    xest(:,k+1)=A_est{k}*xest(:,k)+B_est{k}*u(:,k)+c_est{k}+L*(y(:,k)-C*xest(:,k)); % state estimation
 
     k=k+1; % update time instance
 end
