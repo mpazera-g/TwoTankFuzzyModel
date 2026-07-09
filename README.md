@@ -30,8 +30,8 @@ TwoTankFuzzyModel/
 ├── designObserver.m
 ├── README.md
 ├── LICENSE.txt
-└── examples/
-    └── example_basic_TS_generation.m
+└── docs/
+    └── DOCUMENTATION_TwoTankFuzzyModel.md
 ```
 
 The main files are:
@@ -58,13 +58,24 @@ T = getTanks();
 Ts = 0.1;
 h_vals = linspace(0.1, 0.9, 5);
 
-[Ad, Bd] = generate_TS_model(T, Ts, h_vals);
+[Ad, Bd, cd] = generate_TS_model(T, Ts, h_vals);
 
 h1_k = 0.45;
 h2_k = 0.50;
 
+[A_k, B_k, c_k, mu_vec] = getTSmodel(h1_k, h2_k, Ad, Bd, cd, h_vals, 'triangular');
+```
+
+The interpolated discrete-time affine TS model can then be used as
+```math
+x_{k+1}=A_kx_k+B_ku_k+c_k.
+```
+For backward compatibility, the previous syntax is still supported:
+```matlab
+[Ad, Bd] = generate_TS_model(T, Ts, h_vals);
 [A_k, B_k, mu_vec] = getTSmodel(h1_k, h2_k, Ad, Bd, h_vals, 'triangular');
 ```
+In this case, the affine term is not returned and the function behaves as in the original release.
 
 The function `generate_TS_model` constructs the local models on the grid of operating points and discretizes them using the ZOH Van Loan method. The function `getTSmodel` evaluates the membership functions for the current premise variables and returns the interpolated discrete-time matrices used in the simulation loop.
 
@@ -94,25 +105,25 @@ The default model in the package assumes cylindrical tanks and turbulent gravity
 
 ## 5. General tank balance equation
 
-Let $` h(t) `$ denote the liquid level in the tank, $` V(h) `$ the volume of liquid, $` A_t(h) `$ the cross-sectional area, $` Q_{\mathrm{in}}(t)`$  the inflow rate, and $` Q_{\mathrm{out}}(t) `$ the outflow rate. For an incompressible liquid of density $` \rho `$, the mass balance is
+Let $ h(t) $ denote the liquid level in the tank, $ V(h) $ the volume of liquid, $ A_t(h) $ the cross-sectional area, $ Q_{\mathrm{in}}(t) $ the inflow rate, and $ Q_{\mathrm{out}}(t) $ the outflow rate. For an incompressible liquid of density $ \rho $, the mass balance is
 
-```math
+$$
 \frac{dm(t)}{dt} = \rho Q_{\mathrm{in}}(t) - \rho Q_{\mathrm{out}}(t).
-```
+$$
 
 Since
 
-```math
+$$
 m(t)=\rho V(t), \qquad \frac{dV}{dh}=A_t(h),
-```
+$$
 
 the general volume balance becomes
 
-```math
+$$
 A_t(h)\frac{dh(t)}{dt} = Q_{\mathrm{in}}(t) - Q_{\mathrm{out}}(t).
-```
+$$
 
-For cylindrical tanks, $` A_t(h)=A_t=\mathrm{const.} `$. For non-cylindrical tanks, e.g. conical tanks, $` A_t(h) `$ depends on $` h `$, which introduces additional nonlinearity.
+For cylindrical tanks, $ A_t(h)=A_t=\mathrm{const} $. For non-cylindrical tanks, e.g. conical tanks, $ A_t(h) $ depends on $ h $, which introduces additional nonlinearity.
 
 ---
 
@@ -122,87 +133,87 @@ For cylindrical tanks, $` A_t(h)=A_t=\mathrm{const.} `$. For non-cylindrical tan
 
 For a discharge hole located near the bottom of the tank, Torricelli's law gives the ideal discharge velocity
 
-```math
+$$
 v_{\mathrm{out}} = \sqrt{2gh},
-```
+$$
 
-where $` g `$ is the gravitational acceleration. Under real conditions, losses are represented by a discharge coefficient $` C_{\mathrm{out}} `$, and the outlet area is denoted by $` A_{\mathrm{out}} `$. The resulting outflow is
+where $ g $ is the gravitational acceleration. Under real conditions, losses are represented by a discharge coefficient $ C_{\mathrm{out}} $, and the outlet area is denoted by $ A_{\mathrm{out}} $. The resulting outflow is
 
-```math
+$$
 Q_{\mathrm{out}}(h)=C_{\mathrm{out}}A_{\mathrm{out}}\sqrt{2gh}.
-```
+$$
 
-This relation is nonlinear because it contains $` \sqrt{h} `$. It is the default outflow model used in the package.
+This relation is nonlinear because it contains $ \sqrt{h} $. It is the default outflow model used in the package.
 
 The same relation can be derived from Bernoulli's equation. The pressure difference between the inside of the tank at the outlet level and the surroundings is approximately
 
-```math
+$$
 \Delta p = \rho g h,
-```
+$$
 
-and the discharge velocity is proportional to $` \sqrt{2\Delta p/\rho} `$, which leads to the same square-root dependence on the liquid level.
+and the discharge velocity is proportional to $ \sqrt{2\Delta p/\rho} $, which leads to the same square-root dependence on the liquid level.
 
 ### 6.2 Laminar outflow through a narrow pipe
 
-For slow laminar flow through a long narrow pipe, Hagen--Poiseuille's law may be more appropriate. If the pipe has internal radius $` R_{\mathrm{pipe}} `$, length $` L `$, and the dynamic viscosity of the liquid is $` \mu `$, then
+For slow laminar flow through a long narrow pipe, Hagen--Poiseuille's law may be more appropriate. If the pipe has internal radius $ R_{\mathrm{pipe}} $, length $ L $, and the dynamic viscosity of the liquid is $ \mu $, then
 
-```math
+$$
 Q = \frac{\pi R_{\mathrm{pipe}}^4}{8\mu L}\Delta p.
-```
+$$
 
 Introducing hydraulic resistance
 
-```math
+$$
 R_h = \frac{8\mu L}{\pi R_{\mathrm{pipe}}^4},
-```
+$$
 
 the flow can be written as
 
-```math
+$$
 Q = \frac{\Delta p}{R_h}.
-```
+$$
 
-For outflow from the bottom of the tank, $` \Delta p=\rho gh `$, and therefore
+For outflow from the bottom of the tank, $ \Delta p=\rho gh $, and therefore
 
-```math
+$$
 Q_{\mathrm{out}}(h)=\frac{\rho g}{R_h}h.
-```
+$$
 
-This relation is linear with respect to $` h `$. It may correspond to flow through a very narrow capillary, a porous bottom, or another configuration where laminar assumptions remain valid.
+This relation is linear with respect to $ h $. It may correspond to flow through a very narrow capillary, a porous bottom, or another configuration where laminar assumptions remain valid.
 
 ### 6.3 Hydraulic losses and effective discharge coefficient
 
 In practice, pipes, valves, and nozzles introduce local and distributed losses. In turbulent flow, pressure losses are commonly expressed as
 
-```math
+$$
 \Delta p = \zeta \frac{\rho v^2}{2},
-```
+$$
 
-where $` \zeta `$ is a loss coefficient. If multiple loss sources are present, their effects can be combined into an effective loss coefficient, which modifies the effective discharge coefficient $` C_{\mathrm{out}} `$. As a result, the outflow may still be represented by
+where $ \zeta $ is a loss coefficient. If multiple loss sources are present, their effects can be combined into an effective loss coefficient, which modifies the effective discharge coefficient $ C_{\mathrm{out}} $. As a result, the outflow may still be represented by
 
-```math
+$$
 Q_{\mathrm{out}}(h)=C_{\mathrm{out}}A_{\mathrm{out}}\sqrt{2gh},
-```
+$$
 
-but with a reduced or experimentally calibrated $` C_{\mathrm{out}} `$.
+but with a reduced or experimentally calibrated $ C_{\mathrm{out}} $.
 
 ---
 
 ## 7. Inflow modeling
 
-The package assumes that each tank is filled by a pump driven by a normalized PWM duty cycle $` u_j \in [0,1] `$. The inflow is modeled as
+The package assumes that each tank is filled by a pump driven by a normalized PWM duty cycle $ u_j \in [0,1] $. The inflow is modeled as
 
-```math
+$$
 Q_{\mathrm{in},j}=Q_{\max,j}u_j, \qquad j\in\{1,2\},
-```
+$$
 
-where $`Q_{\max,j} `$ is the maximum pump flow rate.
+where $ Q_{\max,j} $ is the maximum pump flow rate.
 
-In a more general hydraulic system, inflow may also depend on the liquid level. For example, if a tank is supplied from a reservoir with constant level $`H_r`$, then a gravity-driven inflow through an opening may take the form
+In a more general hydraulic system, inflow may also depend on the liquid level. For example, if a tank is supplied from a reservoir with constant level $ H_r $, then a gravity-driven inflow through an opening may take the form
 
-```math
+$$
 Q_{\mathrm{in}}(h)=C_{\mathrm{in}}A_{\mathrm{in}}\sqrt{2g(H_r-h)}.
-```
+$$
 
 Such a model is not used as the default inflow in the package, but the software can be modified to incorporate this assumption if needed.
 
@@ -210,11 +221,11 @@ Such a model is not used as the default inflow in the package, but the software 
 
 ## 8. Nonlinear two-tank model used in the package
 
-The default benchmark consists of two cylindrical tanks placed one above the other. The upper and lower tank levels are denoted by $` h_1(t) `$ and $` h_2(t)`$. The inflows are $`Q_{\mathrm{in},1}(t)`$ and $` Q_{\mathrm{in},2}(t) `$, while the outflows are $`Q_{\mathrm{out},1}(t)`$ and $`Q_{\mathrm{out},2}(t)`$.
+The default benchmark consists of two cylindrical tanks placed one above the other. The upper and lower tank levels are denoted by $ h_1(t) $ and $ h_2(t) $. The inflows are $ Q_{\mathrm{in},1}(t) $ and $ Q_{\mathrm{in},2}(t) $, while the outflows are $ Q_{\mathrm{out},1}(t) $ and $ Q_{\mathrm{out},2}(t) $.
 
 The upper tank dynamics are
 
-```math
+$$
 \frac{dh_1}{dt}
 =
 \frac{1}{A_{t,1}}
@@ -223,11 +234,11 @@ Q_{\mathrm{in},1}
 -
 C_{\mathrm{out},1}A_{\mathrm{out},1}\sqrt{2gh_1}
 \right).
-```
+$$
 
 The lower tank receives its own pump inflow and the outflow from the upper tank. Therefore,
 
-```math
+$$
 \frac{dh_2}{dt}
 =
 \frac{1}{A_{t,2}}
@@ -238,19 +249,19 @@ Q_{\mathrm{in},2}
 -
 C_{\mathrm{out},2}A_{\mathrm{out},2}\sqrt{2gh_2}
 \right).
-```
+$$
 
 By defining
 
-```math
+$$
 k_1=C_{\mathrm{out},1}A_{\mathrm{out},1}\sqrt{2g},
 \qquad
 k_2=C_{\mathrm{out},2}A_{\mathrm{out},2}\sqrt{2g},
-```
+$$
 
-and using $` Q_{\mathrm{in},j}=Q_{\max,j}u_j `$, the model can be written as
+and using $ Q_{\mathrm{in},j}=Q_{\max,j}u_j $, the model can be written as
 
-```math
+$$
 \frac{dh_1}{dt}
 =
 \frac{1}{A_{t,1}}
@@ -259,9 +270,9 @@ Q_{\max,1}u_1
 -
 k_1\sqrt{h_1}
 \right),
-```
+$$
 
-```math
+$$
 \frac{dh_2}{dt}
 =
 \frac{1}{A_{t,2}}
@@ -272,11 +283,11 @@ Q_{\max,2}u_2
 -
 k_2\sqrt{h_2}
 \right).
-```
+$$
 
 The state and input vectors are
 
-```math
+$$
 x =
 \begin{bmatrix}
 h_1\\
@@ -288,7 +299,7 @@ u =
 u_1\\
 u_2
 \end{bmatrix}.
-```
+$$
 
 ---
 
@@ -298,20 +309,20 @@ The default physical parameters used by the package are defined in `getTanks.m`.
 
 | Symbol | Description | Default value | Unit |
 |---|---:|---:|---|
-| $H_1$ | upper tank height | 2 | $m$ |
-| $H_2$ | lower tank height | 2 | $m$ |
-| $D_1$ | upper tank diameter | 0.2 | $m$ |
-| $D_2$ | lower tank diameter | 0.2 | $m$ |
-| $R_1$ | upper tank radius | 0.1 | $m$ |
-| $R_2$ | lower tank radius | 0.1 | $m$ |
-| $g$ | gravitational acceleration | 9.81 | $m/s^2$ |
-| $A_{t,1}$ | upper tank cross-section area | 0.0314 | $m^2$ |
-| $A_{t,2}$ | lower tank cross-section area | 0.0314 | $m^2$ |
-| $Q_{\max}$ | maximum pump flow rate | 0.001 | $`m^3/s`$ |
-| $d_{\mathrm{out},1}$ | upper tank drain opening diameter | 0.02 | $m$ |
-| $d_{\mathrm{out},2}$ | lower tank drain opening diameter | 0.023 | $m$ |
-| $A_{\mathrm{out},1}$ | upper tank drain opening area | $3.1416 \cdot 10^{-4}$ | $m^2$ |
-| $A_{\mathrm{out},2}$ | lower tank drain opening area | $4.1548 \cdot 10^{-4}$ | $m^2$ |
+| $H_1$ | upper tank height | 2 | m |
+| $H_2$ | lower tank height | 2 | m |
+| $D_1$ | upper tank diameter | 0.2 | m |
+| $D_2$ | lower tank diameter | 0.2 | m |
+| $R_1$ | upper tank radius | 0.1 | m |
+| $R_2$ | lower tank radius | 0.1 | m |
+| $g$ | gravitational acceleration | 9.81 | m/s $^2$ |
+| $A_{t,1}$ | upper tank cross-section area | 0.0314 | m $^2$ |
+| $A_{t,2}$ | lower tank cross-section area | 0.0314 | m $^2$ |
+| $Q_{\max}$ | maximum pump flow rate | 0.001 | m $^3$/s |
+| $d_{\mathrm{out},1}$ | upper tank drain opening diameter | 0.02 | m |
+| $d_{\mathrm{out},2}$ | lower tank drain opening diameter | 0.023 | m |
+| $A_{\mathrm{out},1}$ | upper tank drain opening area | $3.1416 \cdot 10^{-4}$ | m $^2$ |
+| $A_{\mathrm{out},2}$ | lower tank drain opening area | $4.1548 \cdot 10^{-4}$ | m $^2$ |
 | $C_{\mathrm{out},1}$ | upper tank discharge coefficient | 0.72 | -- |
 | $C_{\mathrm{out},2}$ | lower tank discharge coefficient | 1 | -- |
 
@@ -325,9 +336,9 @@ These parameters can be modified to match a specific laboratory setup.
 
 The nonlinear model can be compactly written as
 
-```math
+$$
 \dot{x}=f(x,u).
-```
+$$
 
 The TS approximation represents this nonlinear model as a convex combination of local linear models. Each local model is obtained by first-order Taylor expansion around a selected operating point.
 
@@ -336,84 +347,102 @@ The TS approximation represents this nonlinear model as a convex combination of 
 For each operating point
 
 ```math
-(h_{1,i},h_{2,j}),
+x_{i,j}=
+\begin{bmatrix}
+h_{1,i}\\
+h_{2,j}
+\end{bmatrix},
 ```
-
-the local state-space matrices are obtained from the Jacobians
-
+the first-order Taylor expansion of the nonlinear model is written as
 ```math
-A_{i,j} =
-\left.
-\frac{\partial f}{\partial x}
-\right|_{(x_0,u_0)},
-\qquad
-B_{i,j} =
-\left.
-\frac{\partial f}{\partial u}
-\right|_{(x_0,u_0)}.
+\begin{equation}
+	\dot{x} \approx f(x_{i,j},u_{i,j})
+	+A_{i,j}(x-x_{i,j})+B_{i,j}(u-u_{i,j}),
+\end{equation}
 ```
+where
+```math
+\begin{equation}
+	A_{i,j}=
+	\left.\frac{\partial f}{\partial x}\right|_{(x_{i,j},u_{i,j})},
+	\qquad
+	B_{i,j}=
+	\left.\frac{\partial f}{\partial u}\right|_{(x_{i,j},u_{i,j})}.
+\end{equation}
+```
+When the model is written in absolute variables, the local approximation takes the affine form
+```math
+\begin{equation}
+	\dot{x} \approx A_{i,j}x+B_{i,j}u+c_{i,j},
+\end{equation}
+```
+with
+```math
+\begin{equation}
+	c_{i,j}=f(x_{i,j},u_{i,j})-A_{i,j}x_{i,j}-B_{i,j}u_{i,j}.
+\end{equation}
+```
+The affine term is required when the locally linearized model is used in absolute variables. It vanishes only if the model is expressed in deviation variables or under special operating-point conditions.
 
 For the default two-tank model, the local matrices are
-
-```math
+$$
 A_{i,j} =
 \begin{bmatrix}
--\dfrac{k_1}{2A_{t,1}\sqrt{h_{1,i}}} & 0\
+-\dfrac{k_1}{2A_{t,1}\sqrt{h_{1,i}}} & 0\\
 \dfrac{k_1}{2A_{t,2}\sqrt{h_{1,i}}} &
 -\dfrac{k_2}{2A_{t,2}\sqrt{h_{2,j}}}
 \end{bmatrix},
-```
-
-```math
+\qquad
 B =
 \begin{bmatrix}
-\dfrac{Q_{\max,1}}{A_{t,1}} & 0\
+\dfrac{Q_{\max,1}}{A_{t,1}} & 0\\
 0 & \dfrac{Q_{\max,2}}{A_{t,2}}
 \end{bmatrix}.
-```
-
-The matrix $` B `$ in this case is constant because the inflows enter the model linearly through $` Q_{\mathrm{in},j}=Q_{\max,j}u_j `$.
+$$
+The matrix $B_{i,j}$ is constant in the default two-tank model because the pump inflows enter the dynamics linearly through $Q_{\mathrm{in},j}=Q_{\max,j}u_j$. Therefore, $B_{i,j}=B$ for all local rules, although the indexed notation may be retained for consistency with the general affine TS representation.
 
 ### 10.3 Global TS representation
 
-The continuous-time TS model is
+The continuous-time affine TS model is
 
-```math
+$$
 \dot{x}(t)=
 \sum_{i=1}^{N}
 \sum_{j=1}^{N}
 w_{i,j}(h_1(t),h_2(t))
 \left(
-A_{i,j}x(t)+B_{i,j}u(t)
+A_{i,j}x(t)+B_{i,j}u(t)+c_{i,j}
 \right),
-```
+$$
 
-where $` w_{i,j} `$ are normalized rule weights.
+where $ w_{i,j} $ are normalized rule weights.
+
+The corresponding interpolated matrices and affine term are
+$$
+A(t)=\sum_{i=1}^{N}\sum_{j=1}^{N}w_{i,j}A_{i,j}, \quad B(t)=\sum_{i=1}^{N}\sum_{j=1}^{N}w_{i,j}B_{i,j}, \quad c(t)=\sum_{i=1}^{N}\sum_{j=1}^{N}w_{i,j}c_{i,j},
+$$
 
 ---
 
 ## 11. Membership functions
 
 The premise variables are the water levels:
-
-```math
+$$
 z =
 \begin{bmatrix}
 h_1\\
 h_2
 \end{bmatrix}.
-```
+$$
 
-Each premise variable is associated with a set of membership functions. If $` \mu_i(h_1)`$  and $` \mu_j(h_2)`$ denote membership degrees, then the raw activation of the rule $`(i,j)`$ is
-
-```math
-\mu^{\mathrm{raw}}_{i,j} =
-\mu_i(h_1)\mu_j(h_2).
-```
+Each premise variable is associated with a set of membership functions. If $ \mu_i(h_1) $ and $ \mu_j(h_2) $ denote membership degrees, then the raw activation of the rule $ (i,j) $ is
+$$
+\mu^{\mathrm{raw}}_{i,j} = \mu_i(h_1)\mu_j(h_2).
+$$
 
 To ensure convexity, the raw activations are normalized as
 
-```math
+$$
 w_{i,j}(h_1,h_2)
 =
 \frac{\mu_i(h_1)\mu_j(h_2)}
@@ -422,17 +451,17 @@ w_{i,j}(h_1,h_2)
 \sum_{l=1}^{N}
 \mu_k(h_1)\mu_l(h_2)
 }.
-```
+$$
 
 The normalized weights satisfy
 
-```math
+$$
 w_{i,j}\geq 0,
 \qquad
 \sum_{i=1}^{N}
 \sum_{j=1}^{N}
 w_{i,j}=1.
-```
+$$
 
 The package provides two membership-function options:
 
@@ -445,9 +474,9 @@ Users can also implement and use custom membership functions.
 
 For five linguistic levels, the default centers may be
 
-```math
+$$
 h_{\mathrm{vals}} = [0.1,\,0.3,\,0.5,\,0.7,\,0.9].
-```
+$$
 
 The corresponding linguistic labels can be:
 
@@ -463,73 +492,76 @@ The corresponding linguistic labels can be:
 
 Gaussian membership functions are smooth and can be used when smoother transitions between local models are preferred. A typical Gaussian membership function is
 
-```math
+$$
 \mu_i(h)
 =
 \exp\left(
 -\frac{(h-c_i)^2}{2\sigma^2}
 \right),
-```
+$$
 
-where $` c_i `$ is the center of the $` i `$-th fuzzy set and $`\sigma `$ controls the width of the function.
+where $ c_i $ is the center of the $ i $-th fuzzy set and $ \sigma $ controls the width of the function.
 
 ---
 
 ## 12. ZOH discretization using the Van Loan method
 
-The local models are first obtained in continuous time:
+The local models are first obtained in continuous-time affine form:
 
-```math
-\dot{x}(t)=A^c_{i,j}x(t)+B^c_{i,j}u(t).
-```
+$$
+\dot{x}(t)=A^c_{i,j}x(t)+B^c_{i,j}u(t)+c^c_{i,j}.
+$$
 
-For a sampling time $` T_s`$, the package discretizes each local model using Zero-Order Hold (ZOH). The discretization is performed via the Van Loan augmented matrix exponential:
-
-```math
+For a sampling time $ T_s $, the package discretizes each local affine model using Zero-Order Hold. The discretization is performed through an augmented matrix exponential:
+$$
 \exp
 \left(
 \begin{bmatrix}
-A^c_{i,j} & B^c_{i,j}\\
-0 & 0
+A^c_{i,j} & B^c_{i,j} & c^c_{i,j}\\
+0 & 0 & 0\\
+0 & 0 & 0
 \end{bmatrix}
 T_s
 \right)
 =
 \begin{bmatrix}
-A^d_{i,j} & B^d_{i,j}\\
-0 & I
+A^d_{i,j} & B^d_{i,j} & c^d_{i,j}\\
+0 & I & 0\\
+0 & 0 & 1
 \end{bmatrix}.
-```
+$$
 
-The resulting discrete-time local model is
+The resulting discrete-time local affine model is
 
-```math
-x_{k+1}=A^d_{i,j}x_k+B^d_{i,j}u_k.
-```
+$$
+x[k+1]=A^d_{i,j}x[k]+B^d_{i,j}u[k] + c^d_{i,j}.
+$$
 
-This method is exact for piecewise-constant inputs over the sampling interval and is preferable to a simple Euler approximation when reproducibility and numerical consistency are important.
+This method is exact for piecewise-constant inputs and constant affine terms over the sampling interval.
 
 ---
 
 ## 13. Optional transport delay
 
-The nominal local TS matrices do not include transport delay between the tanks. However, in simulation, the inter-tank flow $`Q_{\mathrm{out},1} `$ can be passed through a finite FIFO buffer to emulate transport or actuation delay.
+The nominal local TS matrices do not include transport delay between the tanks. However, in simulation, the inter-tank flow $ Q_{\mathrm{out},1} $ can be passed through a finite FIFO buffer to emulate transport or actuation delay.
 
 If an explicit delay model is required, two equivalent approaches are commonly used:
 
 1. **State augmentation.** A delay chain of length
 
-```math
+$$
 d = \left\lceil\frac{T_d}{T_s}\right\rceil
-```
+$$
 
-is added, where $` T_d`$ is the desired delay and $` T_s `$ is the sampling time. The delayed signal is taken from the last element of the shift register.
+is added, where $ T_d $ is the desired delay and $ T_s $ is the sampling time. The delayed signal is taken from the last element of the shift register.
 
 2. **Discrete-time delay operator.** The upper-tank outflow in the lower-tank dynamics is replaced by
 
-```math
-Q_{\mathrm{out},1,k-d} = z^{-d}Q_{\mathrm{out},1,k}.
-```
+$$
+Q_{\mathrm{out},1}[k-d]
+=
+z^{-d}Q_{\mathrm{out},1}[k].
+$$
 
 In the current package, the delay is treated as a simulation feature and is not included in the local TS matrices by default.
 
@@ -542,7 +574,7 @@ The main workflow is:
 1. Define simulation parameters, e.g. total simulation time, sampling time, and number of discrete-time steps.
 2. Load physical parameters using `getTanks.m`.
 3. Define the grid of operating points for the premise variables.
-4. Generate the TS model using `generate_TS_model.m`.
+4. Generate the affine TS model using `generate_TS_model.m`.
 5. Optionally check controllability and observability using `checkContObs.m`.
 6. Optionally design a TS-based state-feedback controller and state observer.
 7. Define reference trajectories.
@@ -550,7 +582,7 @@ The main workflow is:
 9. At each sampling instant:
    - read the current water levels,
    - evaluate membership functions,
-   - compute the interpolated matrices,
+   - compute the interpolated matrices and affine term,
    - calculate the control input,
    - update the nonlinear plant,
    - update the observer state estimate.
@@ -573,35 +605,47 @@ Output:
 
 ### 15.2 `generate_TS_model(params, Ts, h_vals)`
 
-Generates and discretizes the local TS models.
+Generates and discretizes the local affine TS models.
 
 ```matlab
 [Ad, Bd] = generate_TS_model(T, Ts, h_vals);
+[Ad, Bd, cd] = generate_TS_model(T, Ts, h_vals);
 ```
 
 Inputs:
 
 - `params`: structure with physical and hydraulic parameters,
 - `Ts`: sampling time,
-- `h_vals`: grid of operating points for $`h_1 `$ and $` h_2 `$.
+- `h_vals`: grid of operating points for $ h_1 $ and $ h_2 $.
 
 Outputs:
 
 - `Ad`: cell array of discrete-time state matrices,
-- `Bd`: cell array of discrete-time input matrices.
+- `Bd`: cell array of discrete-time input matrices,
+- `cd`: cell array of discrete-time affine terms.
 
-### 15.3 `getTSmodel(h1_k, h2_k, Ad, Bd, h_vals, type, sigma)`
+The third output `cd` is optional. If only two outputs are requested, the function behaves as in the original implementation and returns only `Ad` and `Bd`.
 
-Computes membership weights and returns the interpolated discrete-time local model.
+### 15.3 `getTSmodel(h1_k, h2_k, Ad, Bd, cd, h_vals, type, sigma)`
+
+Computes membership weights and returns the interpolated discrete-time affine TS model.
+
+Backward-compatible syntax without affine terms:
 
 ```matlab
 [A_k, B_k, mu_vec] = getTSmodel(h1_k, h2_k, Ad, Bd, h_vals, 'triangular');
+```
+
+New syntax with affine terms:
+```matlab
+[A_k, B_k, c_k, mu_vec] = getTSmodel(h1_k, h2_k, Ad, Bd, cd, h_vals, 'triangular');
 ```
 
 Inputs:
 
 - `h1_k`, `h2_k`: current water levels,
 - `Ad`, `Bd`: local discrete-time TS models,
+- `cd`: optional cell array of local affine terms,
 - `h_vals`: grid of operating points,
 - `type`: membership-function type (`'triangular'` or `'gaussian'`),
 - `sigma`: Gaussian width parameter, required for Gaussian membership functions.
@@ -610,7 +654,10 @@ Outputs:
 
 - `A_k`: interpolated state matrix,
 - `B_k`: interpolated input matrix,
+- `c_k`: interpolated affine term, returned when affine syntax is used,
 - `mu_vec`: vector of normalized rule weights.
+
+If three outputs are requested, the third output is `mu_vec`, which preserves the original syntax. If four outputs are requested, the third output is `c_k` and the fourth output is `mu_vec`.
 
 ### 15.4 `checkContObs(Ad, Bd, C)`
 
@@ -651,27 +698,28 @@ This routine requires YALMIP and an SDP solver.
 
 The package includes optional LMI-based routines to demonstrate how the generated TS model can be used in closed-loop studies. These routines are not part of the core TS model generation workflow.
 
-The controller computes a state-feedback gain matrix $`K `$, typically used as
+The controller computes a state-feedback gain matrix $ K $, typically used as
 
-```math
-u_k=Kx_k+Nr_k,
-```
+$$
+u[k]=Kx[k]+Nr[k],
+$$
 
-where $` r_k`$ is the reference signal and $` N`$ may denote a prefilter or reference-scaling matrix.
+where $ r[k] $ is the reference signal and $ N $ may denote a prefilter or reference-scaling matrix.
 
-The observer computes an observer gain $`L`$, and the observer may take the form
+The observer computes an observer gain $ L $, and the observer may take the form
 
-```math
-\hat{x}_{k+1}
+$$
+\hat{x}[k+1]
 =
-A_k\hat{x}_k
+A_k\hat{x}[k]
 +
-B_k u_k
-+
-L(y_k-\hat{y}_k),
+B_k u[k]
++ c_k +
+L(y[k]-\hat{y}[k]),
 \qquad
-\hat{y}_k=C\hat{x}_k.
-```
+\hat{y}[k]=C\hat{x}[k].
+$$
+When the affine TS model is used in absolute variables, the affine term \(c_k\) should also be included in the state prediction part of the observer.
 
 The exact LMI formulation can be modified by users depending on their target control or estimation problem.
 
@@ -679,12 +727,12 @@ The exact LMI formulation can be modified by users depending on their target con
 
 ## 17. Illustrative simulation example
 
-The example distributed with the package generates a TS model using five fuzzy sets for each water level. Since there are two premise variables, this results in $`5 \times 5 = 25`$ local models.
+The example distributed with the package generates a TS model using five fuzzy sets for each water level. Since there are two premise variables, this results in $5 \times 5 = 25$ local models.
 
 A typical simulation scenario uses:
 
-- sampling time $`T_s=0.1`$ s,
-- total simulation time $`T_{\mathrm{end}}=600`$ s,
+- sampling time $T_s=0.1$ s,
+- total simulation time $T_{\mathrm{end}}=600$ s,
 - triangular or Gaussian membership functions,
 - a time-varying reference for the upper tank,
 - a constant reference for the lower tank,
@@ -705,12 +753,13 @@ The simulation produces:
 To improve reproducibility:
 
 1. Use a fixed MATLAB version whenever possible.
-2. Report the sampling time $`T_s`$.
-3. Report the operating-point grid $`h_{\mathrm{vals}}`$.
+2. Report the sampling time $T_s$.
+3. Report the operating-point grid $h_{\mathrm{vals}}$.
 4. Specify whether triangular or Gaussian membership functions are used.
-5. If Gaussian functions are used, report the value of $` \sigma`$.
-6. Report all physical parameters modified in `getTanks.m`.
-7. If optional LMI routines are used, report the YALMIP version and the SDP solver.
+5. If Gaussian functions are used, report the value of $ \sigma $.
+6. Specify whether the affine TS form $x_{k+1}=A_kx_k+B_ku_k+c_k$ or the backward-compatible homogeneous form $x_{k+1}=A_kx_k+B_ku_k$ is used.
+7. Report all physical parameters modified in `getTanks.m`.
+8. If optional LMI routines are used, report the YALMIP version and the SDP solver.
 
 ---
 
@@ -728,8 +777,6 @@ The current implementation focuses on a two-tank benchmark with gravity-driven t
 - TS-MPC, robust TS control, or fault-tolerant TS control,
 - automatic export of generated models for Simulink or Python.
 
-These features constitute possible directions for future development. Users may nevertheless modify the nonlinear model, physical parameters, and membership-function routines to adapt the package to other configurations.
-
 ---
 
 ## 20. License
@@ -745,7 +792,7 @@ If this package is used in academic work, please cite the associated SoftwareX a
 Suggested citation format before publication:
 
 ```text
-Pazera, M. TwoTankFuzzyModel: A MATLAB package for generating Takagi--Sugeno fuzzy models of a two-tank benchmark. GitHub repository, version v1.0.0, 2026.
+Pazera, M. TwoTankFuzzyModel: A MATLAB package for generating Takagi--Sugeno fuzzy models of a two-tank benchmark. GitHub repository, version v1.1.0, 2026.
 ```
 
 ---
