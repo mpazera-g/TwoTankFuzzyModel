@@ -106,9 +106,11 @@ while k < nt
     % [A_sim{k},B_sim{k},w(:,k)]=getTSmodel(h1_k,h2_k,Ad,Bd,h_vals,'gaussian',sigma); % get current A and B matrices based on TS model
     [A_sim{k},B_sim{k},c_sim{k},w(:,k)]=getTSmodel(h1_k,h2_k,Ad,Bd,cd,h_vals); % get current A and B matrices based on TS model
 
-    M  = -Cc/(A_sim{k}-B_sim{k}*K-eye(n))*B_sim{k}; % auxilary variable for pre-filter Kr
-    Kr = M \ eye(size(M,1)); % calculate a pre-filter matrix to the reference vector
-    u(:,k)=-K*x(:,k)+Kr*ref(:,k); % calculate control input
+    Acl = A_sim{k} - B_sim{k}*K; % auxilary variables for pre-filter
+    M = Cc*((eye(n)-Acl)\B_sim{k});
+    d = Cc*((eye(n)-Acl)\c_sim{k});
+    v = M\(ref(:,k)-d); % calculate a pre-filter to the reference vector
+    u(:,k) = -K*x(:,k) + v; % calculate control input
     % u(:,k)=[1;1];   % open-loop control
     u(:,k) = min(max(u(:,k),0),1); % control saturation in [0,1]
 
