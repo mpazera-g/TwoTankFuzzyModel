@@ -759,7 +759,7 @@ If this package is used in academic work, please cite the associated SoftwareX a
 Suggested citation format before publication:
 
 ```text
-Pazera, M. TwoTankFuzzyModel: A MATLAB package for generating Takagi--Sugeno fuzzy models of a two-tank benchmark. GitHub repository, version v1.1.0, 2026.
+Pazera, M. TwoTankFuzzyModel: A MATLAB package for generating Takagi--Sugeno fuzzy models of a two-tank benchmark. GitHub repository, version v1.1.1, 2026.
 ```
 
 ---
